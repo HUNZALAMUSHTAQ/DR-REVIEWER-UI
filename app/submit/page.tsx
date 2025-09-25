@@ -116,6 +116,15 @@ export default function SubmitPage() {
     setIsSubmitting(true)
 
     try {
+      // Debug: log document details before submission
+      try {
+        // eslint-disable-next-line no-console
+        console.log(
+          "Submitting with documents:",
+          uploadedFiles.map((f) => ({ name: f.name, size: f.size, type: f.type, lastModified: f.lastModified }))
+        )
+      } catch {}
+
       // Submit form with files included
       const response = await apiClient.createDesignReview({
         problemDescription: formData.problemDescription,
@@ -168,6 +177,14 @@ export default function SubmitPage() {
   const handleFileUpload = (files: FileList | null) => {
     if (!files) return
     const newFiles = Array.from(files)
+    // Debug: log selected document details in UI
+    try {
+      // eslint-disable-next-line no-console
+      console.log(
+        "Selected documents:",
+        newFiles.map((f) => ({ name: f.name, size: f.size, type: f.type, lastModified: f.lastModified }))
+      )
+    } catch {}
     setUploadedFiles((prev) => [...prev, ...newFiles])
   }
 

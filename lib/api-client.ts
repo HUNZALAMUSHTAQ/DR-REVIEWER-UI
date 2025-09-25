@@ -103,7 +103,8 @@ class ApiClient {
     Object.entries(reviewData).forEach(([key, value]) => {
       if (value === undefined || value === null) return
       if (key === 'documents' && Array.isArray(value)) {
-        value.forEach((file) => formData.append('documents', file as File))
+        // Backend expects 'files' field name; map documents -> files
+        value.forEach((file) => formData.append('files', file as File))
       } else {
         formData.append(key, value.toString())
       }
